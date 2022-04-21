@@ -9,7 +9,7 @@ YELLOW=`tput bold && tput setaf 3`
 BLUE=`tput bold && tput setaf 4`
 NC=`tput sgr0`
 
-FTPSCRIPT='IyEvYmluL2Jhc2gKCgpHUkVFTj1gdHB1dCBib2xkICYmIHRwdXQgc2V0YWYgMmAKZnVuY3Rpb24gR1JFRU4oKXsKCWVjaG8gLWUgIiR7R1JFRU59JHsxfWB0cHV0IHNncjBgIgp9CgpHUkVFTiAiWytdIFN0YXJ0aW5nIHVwIEZUUCBzZXJ2ZXIuIENyZWRzIGFyZSBhbm9uOmFub24sIHBvcnQgMjEiCkdSRUVOICJbK10gTmF2aWdhdGUgdG8gfi8ubG9jYWwvYmluL2Z0cHNlcnZlciB0byBjaGFuZ2UgYW55IHNldHRpbmdzIgoKcHl0aG9uMyAtbSBweWZ0cGRsaWIgLS11c2VybmFtZSBhbm9uIC0tcGFzc3dvcmQgYW5vbiAtcCAyMSAtdwoKZWNobyAtZSAiYHRwdXQgYm9sZCAmJiB0cHV0IHNldGFmIDFgWyFdIFNodXR0aW5nIGRvd24uLi5gdHB1dCBzZ3IwYCIK'
+ALIASES='YWxpYXMgYXNscl9vZmY9J2VjaG8gMCB8IHN1ZG8gdGVlIC9wcm9jL3N5cy9rZXJuZWwvcmFuZG9taXplX3ZhX3NwYWNlJwphbGlhcyBhc2xyX29uPSdlY2hvIDIgfCBzdWRvIHRlZSAvcHJvYy9zeXMva2VybmVsL3JhbmRvbWl6ZV92YV9zcGFjZScKZnRwc2VydmVyKCl7CiAgICBlY2hvIC1lICJcZVswOzMybVsrXSBTdGFydGluZyB1cCBGVFAgc2VydmVyLiBDcmVkcyBhcmUgYW5vbjphbm9uLCBwb3J0IDIxXGVbMG0iCiAgICBweXRob24zIC1tIHB5ZnRwZGxpYiAtLXVzZXJuYW1lIGFub24gLS1wYXNzd29yZCBhbm9uIC1wIDIxIC13CiAgICBlY2hvIC1lICJcZVsxOzMxbVshXSBTaHV0dGluZyBkb3duLi4uXGVbMG0iCn0K'
 
 function RED(){
 	echo -e "\n${RED}${1}${NC}"
@@ -60,6 +60,17 @@ git clone https://github.com/cddmp/enum4linux-ng.git /opt/enum4linux-ng
 BLUE "[*] Installing rustscan..."
 sudo apt install -y rustscan
 
+BLUE "[*] Installing ffuf..."
+sudo apt install -y ffuf
+
+BLUE "[*] Installing feroxbuster..."
+sudo apt install -y feroxbuster
+
+BLUE "[*] Installing Bloodhound..."
+sudo apt install -y bloodhound
+sudo apt install -y neo4j
+pip3 install -U bloodhound
+
 BLUE "[*] Installing gdb..."
 sudo apt install -y gdb
 
@@ -83,9 +94,8 @@ deactivate
 BLUE "[*] Installing pwntools..."
 sudo -u kali pip install -U pwntools
 
-BLUE "[*] Setting up ftpserver macro..."
-echo $FTPSCRIPT | base64 -d > /home/kali/.local/bin/ftpserver
-chmod +x /home/kali/.local/bin/ftpserver
+BLUE "[*] Setting up aliases..."
+echo $ALIASES | base64 -d > /home/kali/.bash_aliases
 
 BLUE "[*] Installing codium..."
 wget -qO - https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg \
