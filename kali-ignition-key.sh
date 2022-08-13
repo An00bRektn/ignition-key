@@ -9,8 +9,6 @@ YELLOW=`tput bold && tput setaf 3`
 BLUE=`tput bold && tput setaf 4`
 NC=`tput sgr0`
 
-ALIASES='YWxpYXMgYXNscl9vZmY9J2VjaG8gMCB8IHN1ZG8gdGVlIC9wcm9jL3N5cy9rZXJuZWwvcmFuZG9taXplX3ZhX3NwYWNlJwphbGlhcyBhc2xyX29uPSdlY2hvIDIgfCBzdWRvIHRlZSAvcHJvYy9zeXMva2VybmVsL3JhbmRvbWl6ZV92YV9zcGFjZScKZnRwc2VydmVyKCl7CiAgICBlY2hvIC1lICJcZVswOzMybVsrXSBTdGFydGluZyB1cCBGVFAgc2VydmVyLiBDcmVkcyBhcmUgYW5vbjphbm9uLCBwb3J0IDIxXGVbMG0iCiAgICBweXRob24zIC1tIHB5ZnRwZGxpYiAtLXVzZXJuYW1lIGFub24gLS1wYXNzd29yZCBhbm9uIC1wIDIxIC13CiAgICBlY2hvIC1lICJcZVsxOzMxbVshXSBTaHV0dGluZyBkb3duLi4uXGVbMG0iCn0K'
-
 function RED(){
 	echo -e "\n${RED}${1}${NC}"
 }
@@ -41,9 +39,9 @@ fi
 BLUE "[*] Pimping my kali..."
 wget https://raw.githubusercontent.com/Dewalt-arch/pimpmykali/master/pimpmykali.sh
 chmod +x pimpmykali.sh
-sed 's/--all) fix_all/--all) fix_all; fix_upgrade/'
+sed 's/--all) fix_all/--all) fix_all; fix_upgrade/' > pimpmykali.sh
 sudo ./pimpmykali.sh --all
-sed 's/--all) fix_all; fix_upgrade/--all) fix_all/'
+sed 's/--all) fix_all; fix_upgrade/--all) fix_all/' > pimpmykali.sh
 
 BLUE "[*] Installing virtualenv..."
 sudo apt install -y virtualenv
@@ -71,17 +69,20 @@ sudo apt install -y bloodhound
 sudo apt install -y neo4j
 pip3 install -U bloodhound
 
-BLUE "[*] Installing gdb..."
-sudo apt install -y gdb
-
 BLUE "[*] Installing seclists..."
 sudo apt install -y seclists
+
+BLUE "[*] Installing gdb..."
+sudo apt install -y gdb
 
 BLUE "[*] Installing pwndbg..."
 git clone https://github.com/pwndbg/pwndbg /opt/pwndbg
 cd /opt/pwndbg
 ./setup.sh
 cd -
+
+BLUE "[*] Installing ghidra..."
+sudo apt install -y ghidra
 
 BLUE "[*] Installing AutoRecon..."
 git clone https://github.com/Tib3rius/AutoRecon.git /opt/AutoRecon
@@ -93,9 +94,6 @@ deactivate
 
 BLUE "[*] Installing pwntools..."
 sudo -u kali pip install -U pwntools
-
-BLUE "[*] Setting up aliases..."
-echo $ALIASES | base64 -d > /home/kali/.bash_aliases
 
 BLUE "[*] Installing codium..."
 wget -qO - https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg \
@@ -117,5 +115,8 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io -y
 
 BLUE "[*] Installing sliver..."
 curl https://sliver.sh/install | sudo bash
+
+BLUE "[*] Setting up aliases..."
+cp dotfiles/.bash_aliases ~/.bash_aliases; source ~/.bash_aliases
 
 GREEN "[++] All done! Happy hacking!"

@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # Credit to John Hammond for base script and colors
-
 # Define colors...
 RED=`tput bold && tput setaf 1`
 GREEN=`tput bold && tput setaf 2`
@@ -68,8 +67,12 @@ echo \
 sudo apt-get update
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 
+BLUE "[*] Installing crypto tools..."
+sudo -u nayr python3 -m pip install PyCryptodome gmpy2 pwntools
+sudo apt install -y sagemath
+
 BLUE "[*] Getting wallpaper..."
 curl https://raw.githubusercontent.com/An00bRektn/ignition-key/main/wallpapers/kali-lincox.png -o ~/Desktop/kali-lincox.png
 
 GREEN "[++] All done! Happy developing!"
-YELLOW "    \\\\--> Consider installing nim or golang as well."
+YELLOW "    \\\\--> Consider installing nim, golang, and rust, hard to automate because of version."
