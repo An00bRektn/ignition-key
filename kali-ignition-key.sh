@@ -37,11 +37,10 @@ then
 fi
 
 BLUE "[*] Pimping my kali..."
-wget https://raw.githubusercontent.com/Dewalt-arch/pimpmykali/master/pimpmykali.sh
-chmod +x pimpmykali.sh
-sed 's/--all) fix_all/--all) fix_all; fix_upgrade/' > pimpmykali.sh
+git clone https://github.com/Dewalt-arch/pimpmykali.git /home/kali
+cd /home/kali
 sudo ./pimpmykali.sh --all
-sed 's/--all) fix_all; fix_upgrade/--all) fix_all/' > pimpmykali.sh
+cd -
 
 BLUE "[*] Installing virtualenv..."
 sudo apt install -y virtualenv
@@ -67,7 +66,7 @@ sudo apt install -y feroxbuster
 BLUE "[*] Installing Bloodhound..."
 sudo apt install -y bloodhound
 sudo apt install -y neo4j
-pip3 install -U bloodhound
+sudo -u kali pip3 install -U bloodhound
 
 BLUE "[*] Installing seclists..."
 sudo apt install -y seclists
@@ -92,8 +91,9 @@ source env/bin/activate
 pip install -r requirements.txt
 deactivate
 
-BLUE "[*] Installing pwntools..."
-sudo -u kali pip install -U pwntools
+BLUE "[*] Installing pwntools and other binary exploitation tools..."
+sudo -u kali pip install -U pwntools ropper
+sudo gem install one_gadget
 
 BLUE "[*] Installing codium..."
 wget -qO - https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg \
@@ -105,18 +105,21 @@ sudo apt update
 sudo apt install codium -y
 
 BLUE "[*] Installing docker..."
-sudo apt-get install ca-certificates gnupg lsb-release
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
-  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-sudo apt-get update
-sudo apt-get install docker-ce docker-ce-cli containerd.io -y
+printf '%s\n' "deb https://download.docker.com/linux/debian bullseye stable" |
+  sudo tee /etc/apt/sources.list.d/docker-ce.listcurl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+curl -fsSL https://download.docker.com/linux/debian/gpg |
+  sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/docker-ce-archive-keyring.gpg
+sudo apt update
+sudo apt install -y docker-ce docker-ce-cli containerd.io
 
 BLUE "[*] Installing sliver..."
 curl https://sliver.sh/install | sudo bash
 
-BLUE "[*] Setting up aliases..."
-cp dotfiles/.bash_aliases ~/.bash_aliases; source ~/.bash_aliases
+BLUE "[*] Setting up dotfiles..."
+cp dotfiles/.bash_aliases /home/kali/.bash_aliases
+cp dotfiles/.bashrc-kali /home/kali/.bashrc
+chown kali:kali /home/kali/.bashrc /home/kali/.bash_aliases
+source /home/kali/.bash_aliases
+source /home/kali/.bashrc
 
 GREEN "[++] All done! Happy hacking!"
