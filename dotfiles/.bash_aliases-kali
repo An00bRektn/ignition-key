@@ -2,7 +2,7 @@ alias aslr_off='echo 0 | sudo tee /proc/sys/kernel/randomize_va_space'
 alias aslr_on='echo 2 | sudo tee /proc/sys/kernel/randomize_va_space'
 alias code='codium'
 alias tun0="ifconfig tun0 | grep 'inet ' | cut -d' ' -f10 | tr -d '\n' | xclip -sel clip"
-
+alias fixvpn_mtu='sudo ip link set dev tun0 mtu 1200'
 ftpserver() {
     echo -e "\e[0;32m[+] Starting up FTP server. Creds are anon:anon, port 21\e[0m"
     python3 -m pyftpdlib --username anon --password anon -p 21 -w

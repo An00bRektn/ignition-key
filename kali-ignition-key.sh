@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # Credit to John Hammond for base script and colors
-
 # Define colors...
 RED=`tput bold && tput setaf 1`
 GREEN=`tput bold && tput setaf 2`
@@ -38,12 +37,18 @@ fi
 
 BLUE "[*] Pimping my kali..."
 git clone https://github.com/Dewalt-arch/pimpmykali.git /home/kali
-cd /home/kali
+cd /home/kali/pimpmykali
 sudo ./pimpmykali.sh --all
 cd -
 
 BLUE "[*] Installing virtualenv..."
 sudo apt install -y virtualenv
+
+BLUE "[*] Installing pyftpdlib..."
+sudo -u kali pip3 install -U pyftpdlib 
+
+BLUE "[*] Installing xclip..."
+sudo apt install -y xclip
 
 BLUE "[*] Installing mingw-w64..."
 sudo apt install -y mingw-w64
@@ -92,7 +97,7 @@ pip install -r requirements.txt
 deactivate
 
 BLUE "[*] Installing pwntools and other binary exploitation tools..."
-sudo -u kali pip install -U pwntools ropper
+sudo -u kali pip3 install -U pwntools ropper
 sudo gem install one_gadget
 
 BLUE "[*] Installing codium..."
@@ -116,7 +121,7 @@ BLUE "[*] Installing sliver..."
 curl https://sliver.sh/install | sudo bash
 
 BLUE "[*] Setting up dotfiles..."
-cp dotfiles/.bash_aliases /home/kali/.bash_aliases
+cp dotfiles/.bash_aliases-kali /home/kali/.bash_aliases
 cp dotfiles/.bashrc-kali /home/kali/.bashrc
 chown kali:kali /home/kali/.bashrc /home/kali/.bash_aliases
 source /home/kali/.bash_aliases
