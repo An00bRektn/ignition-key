@@ -10,6 +10,7 @@ cinst imhex
 cinst floss
 cinst pebear
 cinst sysinternals --ignore-checksum
+cinst processhacker
 cinst wireshark
 cinst git
 

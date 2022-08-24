@@ -20,27 +20,26 @@ Install-BoxstarterPackage -PackageName https://raw.githubusercontent.com/An00bRe
 
 # For everything that isn't in chocolatey - too lazy to make a custom
 # package like flare or commando
-<#
-- pestudio
--  
-#>
 New-Item -Path C:\Tools -ItemType Directory
+# Path for Defender exclusions
+New-Item -Path 'C:\Users\sreisz\Desktop\the-lab' -ItemType Directory
 
 Invoke-WebRequest -Uri 'https://www.winitor.com/tools/pestudio/current/pestudio.zip' -OutFile C:\Tools\pestudio.zip
 Invoke-WebRequest -Uri 'https://aka.ms/vs/17/release/vs_BuildTools.exe' -OutFile C:\Tools\vs_BuildTools.exe
 Invoke-WebRequest -Uri 'http://sandsprite.com/CodeStuff/scdbg.zip' -OutFile C:\Tools\scdbg.zip
+Invoke-WebRequest -Uri 'https://f001.backblazeb2.com/file/EricZimmermanTools/All.zip' -OutFile C:\Tools\EricZimmerman.zip
+Invoke-WebRequest -Uri 'https://didierstevens.com/files/software/DidierStevensSuite.zip' -Outfile C:\Tools\DidierStevensSuite.zip
 
 Expand-Archive C:\Tools\pestudio.zip -DestinationPath C:\Tools\pestudio
 Expand-Archive C:\Tools\scdbg.zip -DestinationPath C:\Tools\scdbg
-
-Invoke-Expression 'git clone https://github.com/DidierStevens/DidierStevensSuite.git C:\Desktop\DiderStevensSuite'
+Expand-Archive C:\Tools\EricZimmerman.zip -DestinationPath C:\Tools\EricZimmermanTools
+Expand-Archive C:\Tools\DidierStevensSuite.zip -DestinationPath C:\Tools\DidierStevensSuite
 
 # A bunch of things that I don't want to automate because they're very likely to break :/
 Write-Host "[+] Install Complete! Here's a checklist of things you might also want to do" -ForegroundColor Green
 Write-Host "  \\--> Set the wallpaper" -ForegroundColor Yellow
 Write-Host "  \\--> VS Build tool setup in C:\Tools" -ForegroundColor Yellow
 Write-Host "  \\--> Download BurpSuite? (https://portswigger.net/burp/releases/professional-community-2022-8-2)" -ForegroundColor Yellow
-Write-Host "  \\--> Install EricZimmerman tools (https://ericzimmerman.github.io/#!index.md)" -ForegroundColor Yellow
 Write-Host "  \\--> Create an exception for Defender so it doesn't choke and die (also probably grab ThreatCheck)" -ForegroundColor Yellow
 
 Read-Host "Press any key to continue..."
