@@ -119,6 +119,10 @@ sudo usermod -aG docker kali
 BLUE "[*] Installing sliver..."
 curl https://sliver.sh/install | sudo bash
 
+BLUE "[*] Installing Nim..."
+sudo -u kali curl https://nim-lang.org/choosenim/init.sh -sSf | sh
+echo 'export PATH=/home/kali/.nimble/bin:$PATH' >> /home/kali/.zshrc
+
 YELLOW "Please read!"
 BLUE "   The kali default shell is zsh, which has some minor differences from how bash works."
 BLUE "   If you would like to swap your default shell to bash, please type Y, otherwise, type N"
@@ -129,6 +133,7 @@ dotfiles(){
 	cp ./dotfiles/.bash_aliases-kali /home/kali/.bash_aliases
 	cp ./dotfiles/.bashrc-kali /home/kali/.bashrc
 	chown kali:kali /home/kali/.bashrc /home/kali/.bash_aliases
+	echo 'export PATH=/home/kali/.nimble/bin:$PATH' >> /home/kali/.bashrc
 	source /home/kali/.bash_aliases
 	source /home/kali/.bashrc
 }
@@ -139,4 +144,4 @@ case $userinput in
 	*) RED "[!] Invalid response, keeping zsh...";;
 esac
 
-GREEN "[++] All done! Happy hacking!"
+GREEN "[++] All done! Happy hacking! Remember to reboot and login again to see the full changes!"
