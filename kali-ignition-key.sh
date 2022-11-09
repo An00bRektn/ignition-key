@@ -36,7 +36,7 @@ then
 fi
 
 BLUE "[*] Pimping my kali..."
-git clone https://github.com/Dewalt-arch/pimpmykali.git /home/kali
+git clone https://github.com/Dewalt-arch/pimpmykali.git /home/kali/pimpmykali
 cd /home/kali/pimpmykali
 sudo ./pimpmykali.sh --all
 cd -
@@ -81,6 +81,7 @@ sudo apt install -y gdb
 
 BLUE "[*] Installing pwndbg..."
 git clone https://github.com/pwndbg/pwndbg /opt/pwndbg
+chown -R kali:kali /opt/pwndbg
 cd /opt/pwndbg
 ./setup.sh
 cd -
@@ -95,6 +96,7 @@ virtualenv env -p $(which python3)
 source env/bin/activate
 pip install -r requirements.txt
 deactivate
+cd -
 
 BLUE "[*] Installing pwntools and other binary exploitation tools..."
 sudo -u kali pip3 install -U pwntools ropper
@@ -110,21 +112,31 @@ sudo apt update
 sudo apt install codium -y
 
 BLUE "[*] Installing docker..."
-printf '%s\n' "deb https://download.docker.com/linux/debian bullseye stable" |
-  sudo tee /etc/apt/sources.list.d/docker-ce.listcurl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-curl -fsSL https://download.docker.com/linux/debian/gpg |
-  sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/docker-ce-archive-keyring.gpg
-sudo apt update
-sudo apt install -y docker-ce docker-ce-cli containerd.io
+sudo apt install -y docker.io
+sudo systemctl enable docker --now
+sudo usermod -aG docker kali
 
 BLUE "[*] Installing sliver..."
 curl https://sliver.sh/install | sudo bash
 
-BLUE "[*] Setting up dotfiles..."
-cp dotfiles/.bash_aliases-kali /home/kali/.bash_aliases
-cp dotfiles/.bashrc-kali /home/kali/.bashrc
-chown kali:kali /home/kali/.bashrc /home/kali/.bash_aliases
-source /home/kali/.bash_aliases
-source /home/kali/.bashrc
+YELLOW "Please read!"
+BLUE "   The kali default shell is zsh, which has some minor differences from how bash works."
+BLUE "   If you would like to swap your default shell to bash, please type Y, otherwise, type N"
+read -n1 -p "   Please type Y or N : " userinput
+
+dotfiles(){
+	BLUE "[*] Setting up dotfiles..."
+	cp ./dotfiles/.bash_aliases-kali /home/kali/.bash_aliases
+	cp ./dotfiles/.bashrc-kali /home/kali/.bashrc
+	chown kali:kali /home/kali/.bashrc /home/kali/.bash_aliases
+	source /home/kali/.bash_aliases
+	source /home/kali/.bashrc
+}
+
+case $userinput in
+	y|Y) BLUE "[*] Swapping to bash..."; chsh -s /bin/bash kali; dotfiles  ;;
+	n|N) BLUE "[*] Sticking to zsh..." ;;
+	*) RED "[!] Invalid response, keeping zsh...";;
+esac
 
 GREEN "[++] All done! Happy hacking!"
