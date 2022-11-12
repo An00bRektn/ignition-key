@@ -53,8 +53,13 @@ sudo apt install -y xclip
 BLUE "[*] Installing mingw-w64..."
 sudo apt install -y mingw-w64
 
-BLUE "[*] Installing terminator..."
-sudo apt install -y terminator
+BLUE "[*] Installing tmux (and terminator as a fallback)..."
+sudo apt install -y tmux terminator
+
+BLUE "[*] Installing alacritty..."
+wget https://github.com/barnumbirr/alacritty-debian/releases/download/v0.11.0-1/alacritty_0.11.0-1_amd64_bullseye.deb
+sudo dpkg -i alacritty_0.11.0-1_amd64_bullseye.deb
+sudo apt install -f
 
 BLUE "[*] Getting enum4linux-ng..."
 git clone https://github.com/cddmp/enum4linux-ng.git /opt/enum4linux-ng
@@ -143,5 +148,9 @@ case $userinput in
 	n|N) BLUE "[*] Sticking to zsh..." ;;
 	*) RED "[!] Invalid response, keeping zsh...";;
 esac
+
+cp ./dotfiles/.tmux.conf /home/kali/.tmux.conf
+mkdir -p /home/kali/.config/alacritty
+cp ./dotfiles/alacritty.yml /home/kali/.config/alacritty/alacritty.yml
 
 GREEN "[++] All done! Happy hacking! Remember to reboot and login again to see the full changes!"
