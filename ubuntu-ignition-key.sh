@@ -39,11 +39,19 @@ sudo apt install -y git
 BLUE "[*] Installing tmux (and terminator as a fallback)..."
 sudo apt install -y tmux terminator
 
+BLUE "[*] Installing alacritty..."
+wget https://github.com/barnumbirr/alacritty-debian/releases/download/v0.11.0-1/alacritty_0.11.0-1_amd64_bullseye.deb
+sudo dpkg -i alacritty_0.11.0-1_amd64_bullseye.deb
+sudo apt install -f
+
 BLUE "[*] Installing openvpn..."
 sudo apt-get install -y openvpn
 
+BLUE "[*] Installing mingw-w64..."
+sudo apt install -y mingw-w64
+
 BLUE "[*] Installing curl and wget..."
-sudo apt-get install -y curl
+sudo apt-get install -y curl wget
 
 BLUE "[*] Installing Powershell..."
 sudo apt install -y apt-transport-https software-properties-common
@@ -60,6 +68,13 @@ sudo apt install -y hexedit
 
 BLUE "[*] Installing gdb..."
 sudo apt install -y gdb	
+
+BLUE "[*] Installing pwndbg..."
+git clone https://github.com/pwndbg/pwndbg /opt/pwndbg
+chown -R nayr:nayr /opt/pwndbg
+cd /opt/pwndbg
+./setup.sh
+cd -
 
 BLUE "[*] Installing pip..."
 sudo apt-get install -y python-pip
@@ -81,6 +96,10 @@ BLUE "[*] Installing crypto tools..."
 sudo -u nayr python3 -m pip install PyCryptodome gmpy2 pwntools
 sudo apt install -y sagemath
 
+BLUE "[*] Installing Nim..."
+sudo -u nayr curl https://nim-lang.org/choosenim/init.sh -sSf | sh
+echo 'export PATH=/home/nayr/.nimble/bin:$PATH' >> /home/nayr/.bashrc
+
 BLUE "[*] Getting wallpaper..."
 curl https://raw.githubusercontent.com/An00bRektn/ignition-key/main/wallpapers/kali-lincox.png -o ~/Desktop/kali-lincox.png
 
@@ -95,4 +114,4 @@ source ~/.bash_aliases
 source ~/.bashrc
 
 GREEN "[++] All done! Happy developing!"
-YELLOW "    \\\\--> Consider installing nim, golang, and rust, hard to automate because of version."
+YELLOW "    \\\\--> Consider installing golang, and rust, hard to automate because of version."
