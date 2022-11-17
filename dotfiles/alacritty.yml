@@ -10,7 +10,7 @@ env:
   # each instance of Alacritty. If it is not present, alacritty will
   # check the local terminfo database and use `alacritty` if it is
   # available, otherwise `xterm-256color` is used.
-  TERM: alacritty
+  #TERM: alacritty
   LANG: "en_US.UTF-8"
   LC_CTYPE: en_US.UTF-8
 
@@ -28,8 +28,8 @@ window:
   # Blank space added around the window in pixels. This padding is scaled
   # by DPI and the specified value is always added at both opposing sides.
   padding:
-    x: 12
-    y: 12
+    x: 0
+    y: 0
 
   # Spread additional padding evenly around the terminal content.
   dynamic_padding: true
@@ -244,8 +244,8 @@ key_bindings:
   - { key: PageDown, mods: Control, chars: "\e[6;5~" }
   - { key: PageDown, chars: "\e[6~" }
   - { key: Tab, mods: Shift, chars: "\e[Z" }
-  - { key: Back, chars: "" }
-  - { key: Back, mods: Alt, chars: "\e" }
+  - { key: Back, chars: "\x7f" }
+  - { key: Back, mods: Alt, chars: "\x1b\x7f" }
   - { key: Insert, chars: "\e[2~" }
   - { key: Delete, chars: "\e[3~" }
   - { key: Left, mods: Shift, chars: "\e[1;2D" }

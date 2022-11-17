@@ -7,7 +7,9 @@ GREEN=`tput bold && tput setaf 2`
 YELLOW=`tput bold && tput setaf 3`
 BLUE=`tput bold && tput setaf 4`
 NC=`tput sgr0`
-USERHOME=/home/$USER
+# Call me bad at bash but it works
+REGUSER=$(id -nu 1000)
+USERHOME=/home/$REGUSER
 
 function RED(){
 	echo -e "\n${RED}${1}${NC}"
@@ -30,14 +32,21 @@ then
 fi
 
 BLUE "[*] Updating repositories..."
-sudo apt update
-sudo apt upgrade
+sudo apt update -y
+sudo apt upgrade -y
 
 BLUE "[*] Installing git..."
 sudo apt install -y git
 
+BLUE "[*] Installing vim..."
+sudo apt install -y vim
+
+BLUE "[*] Installing xclip..."
+sudo apt install -y xclip
+
 BLUE "[*] Installing tmux (and terminator as a fallback)..."
 sudo apt install -y tmux terminator
+git clone https://github.com/tmux-plugins/tpm $USERHOME/.tmux/plugins/tpm
 
 BLUE "[*] Installing alacritty..."
 wget https://github.com/barnumbirr/alacritty-debian/releases/download/v0.11.0-1/alacritty_0.11.0-1_amd64_bullseye.deb
@@ -71,7 +80,7 @@ sudo apt install -y gdb
 
 BLUE "[*] Installing pwndbg..."
 git clone https://github.com/pwndbg/pwndbg /opt/pwndbg
-chown -R nayr:nayr /opt/pwndbg
+chown -R $REGUSER:$REGUSER /opt/pwndbg
 cd /opt/pwndbg
 ./setup.sh
 cd -
@@ -90,15 +99,18 @@ echo \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo apt-get update
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io
-sudo usermod -aG docker $USER
+sudo usermod -aG docker $REGUSER
 
 BLUE "[*] Installing crypto tools..."
-sudo -u nayr python3 -m pip install PyCryptodome gmpy2 pwntools
+sudo -u $REGUSER python3 -m pip install PyCryptodome gmpy2 pwntools
 sudo apt install -y sagemath
 
 BLUE "[*] Installing Nim..."
-sudo -u nayr curl https://nim-lang.org/choosenim/init.sh -sSf | sh
-echo 'export PATH=/home/nayr/.nimble/bin:$PATH' >> /home/nayr/.bashrc
+sudo -u $REGUSER curl https://nim-lang.org/choosenim/init.sh -sSf | sh
+echo "export PATH=/home/$REGUSER/.nimble/bin:\$PATH" >> /home/$REGUSER/.bashrc
+
+BLUE "[*] Setting up nvm..."
+sudo -u $REGUSER curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
 
 BLUE "[*] Getting wallpaper..."
 curl https://raw.githubusercontent.com/An00bRektn/ignition-key/main/wallpapers/kali-lincox.png -o ~/Desktop/kali-lincox.png
@@ -106,7 +118,8 @@ curl https://raw.githubusercontent.com/An00bRektn/ignition-key/main/wallpapers/k
 BLUE "[*] Setting up dotfiles..."
 cp ./dotfiles/.bash_aliases-ubuntu $USERHOME/.bash_aliases
 cp ./dotfiles/.bashrc-ubuntu $USERHOME/.bashrc
-chown $USER:$USER $USERHOME/.bashrc $USERHOME/.bash_aliases
+chown $REGUSER:$REGUSER $USERHOME/.bashrc $USERHOME/.bash_aliases
+cp ./dotfiles/.vimrc $USERHOME/.vimrc
 cp ./dotfiles/.tmux.conf $USERHOME/.tmux.conf
 mkdir -p $USERHOME/.config/alacritty
 cp ./dotfiles/alacritty.yml $USERHOME/.config/alacritty/alacritty.yml
@@ -114,4 +127,4 @@ source ~/.bash_aliases
 source ~/.bashrc
 
 GREEN "[++] All done! Happy developing!"
-YELLOW "    \\\\--> Consider installing golang, and rust, hard to automate because of version."
+YELLOW "  \\\\--> Consider installing golang and rust, didn't want to automate it"
