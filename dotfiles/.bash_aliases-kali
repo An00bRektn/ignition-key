@@ -23,12 +23,12 @@ dex() {
 alias dps="docker ps -a"
 
 # Credit JazzPizzazz: https://github.com/jazzpizazz/zsh-aliases/blob/main/aliases.zsh
-nmap_default() {
+nmap_default_fast() {
     if [ $# -eq 0 ]
         then
         echo "[i] Usage: nmap_default ip (options)"
     else
-        [ ! -d "./nmap" ] && echo "[i] Creating $(pwd)/scans..." && mkdir scans
+        [ ! -d "./scans" ] && echo "[i] Creating $(pwd)/scans..." && mkdir scans
         sudo nmap -sCV -T4 --min-rate 10000 "${@}" -v -oN scans/tcp_default
     fi
 }
@@ -38,7 +38,40 @@ nmap_udp() {
         then
         echo "[i] Usage: nmap_udp ip (options)"
     else
-        [ ! -d "./nmap" ] && echo "[i] Creating $(pwd)/nmap..." && mkdir nmap
+        [ ! -d "./scans" ] && echo "[i] Creating $(pwd)/nmap..." && mkdir scans
         sudo nmap -sUCV -T4 --min-rate 10000 "${@}" -v -oN nmap/udp_default
+    fi
+}
+
+# Credit: MuirlandOracle (https://github.com/MuirlandOracle/linux-config/blob/master/Bash/Scanning/nmap-wrappers)
+tcp_scan() {
+    if [ $# -eq 0 ]
+        then
+        echo "[i] Usage: tcp_scan ip (options)"
+    else
+        [ ! -d "./scans" ] && echo "[i] Creating $(pwd)/scans..." && mkdir scans
+        echo "sudo nmap -p- --min-rate 10000 -vv "${@}" -oA scans/tcp-allports"
+        sudo nmap -p- --min-rate 10000 -vv "${@}" -oA scans/tcp-allports && local ports=$(egrep -o "[0-9]+/" scans/tcp-allports.gnmap | sed -e 's/\///' | xargs | sed 's/ /,/g')
+        echo $ports | tr -d "\n" | xclip -sel clip
+    fi
+}
+
+tcp_scripts() {
+    if [ $# -eq 0 ]
+        then
+        echo "[i] Usage: tcp_scan ip ports"
+    else
+        [ ! -d "./scans" ] && echo "[i] Creating $(pwd)/scans..." && mkdir scans
+        echo "sudo nmap -p- -Pn -p $2 -vv $1 -sC -sV -oA scans/tcp-allscripts "
+        sudo nmap -Pn -p $2 -vv $1 -sC -sV -oA scans/tcp-allscripts 
+    fi    
+}
+
+get_ports() {
+    if [ $# -eq 0 ]
+        then
+        echo "[i] Usage: get_ports GREPPABLE_NMAP"
+    else
+        egrep -o "[0-9]+/" $1 | sed -e 's/\///' | xargs | sed 's/ /,/g' | tr -d "\n" | c
     fi
 }

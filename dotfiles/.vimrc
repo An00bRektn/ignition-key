@@ -6,6 +6,7 @@ set number
 set tabstop=4
 set shiftwidth=4
 set expandtab
+syntax on
 
 let g:tokyonight_style = 'night'
 let g:tokyonight_enable_italic = 0

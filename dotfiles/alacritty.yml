@@ -244,8 +244,8 @@ key_bindings:
   - { key: PageDown, mods: Control, chars: "\e[6;5~" }
   - { key: PageDown, chars: "\e[6~" }
   - { key: Tab, mods: Shift, chars: "\e[Z" }
-  - { key: Back, chars: "\x7f" }
-  - { key: Back, mods: Alt, chars: "\x1b\x7f" }
+  - { key: Back, chars: "" }
+  - { key: Back, mods: Alt, chars: "\e" }
   - { key: Insert, chars: "\e[2~" }
   - { key: Delete, chars: "\e[3~" }
   - { key: Left, mods: Shift, chars: "\e[1;2D" }
