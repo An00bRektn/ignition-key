@@ -45,7 +45,8 @@ BLUE "[*] Installing virtualenv..."
 sudo apt install -y virtualenv
 
 BLUE "[*] Installing pyftpdlib..."
-sudo -u kali pip3 install -U pyftpdlib 
+#sudo -u kali pip3 install -U pyftpdlib 
+sudo apt install python3-pyftpdlib
 
 BLUE "[*] Installing xclip..."
 sudo apt install -y xclip
@@ -76,7 +77,7 @@ sudo apt install -y feroxbuster
 BLUE "[*] Installing Bloodhound..."
 sudo apt install -y bloodhound
 sudo apt install -y neo4j
-sudo -u kali pip3 install -U bloodhound
+sudo -u kali pipx install -U bloodhound
 
 BLUE "[*] Installing seclists..."
 sudo apt install -y seclists
@@ -91,12 +92,18 @@ cd /opt/pwndbg
 ./setup.sh
 cd -
 
+BLUE "[*] Installing gef..."
+mkdir -p /opt/gef; chown kali:kali /opt/gef
+wget -O /opt/gef/.gdbinit-gef.py -q https://gef.blah.cat/py
+echo source ~/.gdbinit-gef.py >> ~/.gdbinit-gef
+
 BLUE "[*] Installing ghidra..."
 sudo apt install -y ghidra
 
 BLUE "[*] Installing pwntools and other binary exploitation tools..."
-sudo -u kali pip3 install -U pwntools ropper
-sudo gem install one_gadget
+sudo apt install python3-pwntools
+sudo -u kali pipx install -U ropper
+sudo gem install one_gadget seccomp-tools
 
 BLUE "[*] Installing codium..."
 wget -qO - https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg \
