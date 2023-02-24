@@ -10,7 +10,7 @@ env:
   # each instance of Alacritty. If it is not present, alacritty will
   # check the local terminfo database and use `alacritty` if it is
   # available, otherwise `xterm-256color` is used.
-  #TERM: alacritty
+  TERM: xterm-256color
   LANG: "en_US.UTF-8"
   LC_CTYPE: en_US.UTF-8
 
@@ -28,7 +28,7 @@ window:
   # Blank space added around the window in pixels. This padding is scaled
   # by DPI and the specified value is always added at both opposing sides.
   padding:
-    x: 0
+    x: 8
     y: 0
 
   # Spread additional padding evenly around the terminal content.
@@ -52,7 +52,7 @@ scrolling:
 
   # Number of lines the viewport will move for every line scrolled when
   # scrollback is enabled (history > 0).
-  multiplier: 3
+  multiplier: 2
 
   # Faux Scrolling
   #
@@ -61,7 +61,7 @@ scrolling:
   # to allow mouse scrolling for applications like `man`.
   #
   # Specifying `0` will disable faux scrolling.
-  faux_multiplier: 3
+  faux_multiplier: 2
 
   # Scroll to the bottom when new text is written to the terminal.
   auto_scroll: false

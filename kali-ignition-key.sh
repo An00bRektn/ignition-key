@@ -94,15 +94,6 @@ cd -
 BLUE "[*] Installing ghidra..."
 sudo apt install -y ghidra
 
-BLUE "[*] Installing AutoRecon..."
-git clone https://github.com/Tib3rius/AutoRecon.git /opt/AutoRecon
-cd /opt/AutoRecon
-virtualenv env -p $(which python3)
-source env/bin/activate
-pip install -r requirements.txt
-deactivate
-cd -
-
 BLUE "[*] Installing pwntools and other binary exploitation tools..."
 sudo -u kali pip3 install -U pwntools ropper
 sudo gem install one_gadget
@@ -135,8 +126,9 @@ read -n1 -p "   Please type Y or N : " userinput
 
 dotfiles(){
 	BLUE "[*] Setting up dotfiles..."
-	cp ./dotfiles/.bash_aliases-kali /home/kali/.bash_aliases
-	cp ./dotfiles/.bashrc-kali /home/kali/.bashrc
+	cp ./dotfiles/bash/.bash_aliases-kali /home/kali/.bash_aliases
+	cp ./dotfiles/bash/.bashrc-kali /home/kali/.bashrc
+	cp ./dotfiles/vim/.vimrc /home/kali/vim
 	chown kali:kali /home/kali/.bashrc /home/kali/.bash_aliases
 	echo 'export PATH=/home/kali/.nimble/bin:$PATH' >> /home/kali/.bashrc
 	source /home/kali/.bash_aliases

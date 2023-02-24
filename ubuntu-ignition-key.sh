@@ -39,7 +39,7 @@ BLUE "[*] Installing git..."
 sudo apt install -y git
 
 BLUE "[*] Installing vim..."
-sudo apt install -y vim
+sudo apt install -y vim-gtk3
 
 BLUE "[*] Installing xclip..."
 sudo apt install -y xclip
@@ -114,12 +114,33 @@ sudo -u $REGUSER curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/i
 
 BLUE "[*] Getting wallpaper..."
 curl https://raw.githubusercontent.com/An00bRektn/ignition-key/main/wallpapers/kali-lincox.png -o ~/Desktop/kali-lincox.png
+sudo apt install neofetch -y
+cp ./dotfiles/toad.txt /home/$REGUSER/Public/toad.txt
+
+BLUE "[*] Doing some fonts, theme, and icon stuff..."
+mkdir -p ~/.local/share/fonts/
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/RobotoMono.zip
+unzip RobotoMono.zip -d ~/.local/share/fonts/
+
+mkdir -p ~/Documents/themes
+git clone https://github.com/vinceliuice/Qogir-theme.git ~/Documents/themes
+gsettings set org.gnome.desktop.wm.preferences button-layout appmenu:minimize,maximize,close
+cd ~/Documents/themes/Qogir-theme
+sudo ./install.sh
+sudo ./install.sh --tweaks round
+cd - 
+
+mkdir -p ~/Documents/icons
+git clone https://github.com/vinceliuice/Qogir-icon-theme.git ~/Documents/icons
+cd ~/Documents/icons
+sudo ./install.sh -d ~/.local/share/icons
+cd -
 
 BLUE "[*] Setting up dotfiles..."
-cp ./dotfiles/.bash_aliases-ubuntu $USERHOME/.bash_aliases
-cp ./dotfiles/.bashrc-ubuntu $USERHOME/.bashrc
+cp ./dotfiles/bash/.bash_aliases-ubuntu $USERHOME/.bash_aliases
+cp ./dotfiles/bash/.bashrc-ubuntu $USERHOME/.bashrc
 chown $REGUSER:$REGUSER $USERHOME/.bashrc $USERHOME/.bash_aliases
-cp ./dotfiles/.vimrc $USERHOME/.vimrc
+cp ./dotfiles/vim/.vimrc-full $USERHOME/.vimrc
 cp ./dotfiles/.tmux.conf $USERHOME/.tmux.conf
 mkdir -p $USERHOME/.config/alacritty
 cp ./dotfiles/alacritty.yml $USERHOME/.config/alacritty/alacritty.yml

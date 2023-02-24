@@ -1,0 +1,58 @@
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin()
+Plug 'scrooloose/nerdtree'
+
+Plug 'reedes/vim-pencil'
+
+Plug 'ghifarit53/tokyonight-vim'
+
+Plug 'voldikss/vim-floaterm'
+
+Plug 'airblade/vim-gitgutter'
+
+Plug 'bling/vim-airline'
+
+Plug 'sheerun/vim-polyglot'
+
+Plug 'rust-lang/rust.vim'
+
+Plug 'dense-analysis/ale'
+call plug#end()
+
+set number
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set clipboard=unnamedplus
+:imap <C-s> <C-w>
+
+if exists('+termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
+
+let g:tokyonight_style = 'night' " available: night, storm
+let g:tokyonight_enable_italic = 0
+colorscheme tokyonight
+syntax on
+
+" https://stackoverflow.com/questions/2514445/turning-off-auto-indent-when-pasting-text-into-vim/38258720#38258720
+let &t_SI .= "\<Esc>[?2004h"
+let &t_EI .= "\<Esc>[?2004l"
+
+inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+
+function! XTermPasteBegin()
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ""
+endfunction
+
+" code stuffs
+let g:ale_linters = {'rust': ['analyzer'], 'python': ['pylint']}
