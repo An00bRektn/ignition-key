@@ -45,8 +45,8 @@ BLUE "[*] Installing virtualenv..."
 sudo apt install -y virtualenv
 
 BLUE "[*] Installing pyftpdlib..."
-#sudo -u kali pip3 install -U pyftpdlib 
-sudo apt install python3-pyftpdlib
+sudo -u kali pip3 install -U pyftpdlib 
+#sudo apt install python3-pyftpdlib
 
 BLUE "[*] Installing xclip..."
 sudo apt install -y xclip
@@ -71,13 +71,20 @@ sudo apt install -y rustscan
 BLUE "[*] Installing ffuf..."
 sudo apt install -y ffuf
 
+BLUE "[*] Installing up..."
+git clone https://github.com/An00bRektn/up-http-tool.git /opt/up-http-tool
+chown -R kali:kali /opt/up-http-tool
+sudo -u kali python3 -m pip install waitress
+cp /opt/up-http-tool/up /home/kali/.local/bin/up
+
 BLUE "[*] Installing feroxbuster..."
 sudo apt install -y feroxbuster
 
 BLUE "[*] Installing Bloodhound..."
 sudo apt install -y bloodhound
 sudo apt install -y neo4j
-sudo -u kali pipx install -U bloodhound
+#sudo -u kali pipx install -U bloodhound
+sudo -u kali python3 -m pip install -U bloodhound
 
 BLUE "[*] Installing seclists..."
 sudo apt install -y seclists
@@ -101,8 +108,9 @@ BLUE "[*] Installing ghidra..."
 sudo apt install -y ghidra
 
 BLUE "[*] Installing pwntools and other binary exploitation tools..."
-sudo apt install python3-pwntools
-sudo -u kali pipx install -U ropper
+#sudo apt install python3-pwntools
+#sudo -u kali pipx install -U ropper
+sudo -u kali python3 -m pip install -U pwntools
 sudo gem install one_gadget seccomp-tools
 
 BLUE "[*] Installing codium..."
@@ -135,7 +143,7 @@ dotfiles(){
 	BLUE "[*] Setting up dotfiles..."
 	cp ./dotfiles/bash/.bash_aliases-kali /home/kali/.bash_aliases
 	cp ./dotfiles/bash/.bashrc-kali /home/kali/.bashrc
-	cp ./dotfiles/vim/.vimrc /home/kali/vim
+	cp ./dotfiles/vim/.vimrc /home/kali/.vimrc
 	chown kali:kali /home/kali/.bashrc /home/kali/.bash_aliases
 	echo 'export PATH=/home/kali/.nimble/bin:$PATH' >> /home/kali/.bashrc
 	source /home/kali/.bash_aliases
@@ -149,7 +157,10 @@ case $userinput in
 esac
 
 cp ./dotfiles/.tmux.conf /home/kali/.tmux.conf
+mkdir -p /home/kali/.tmux/logs
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 mkdir -p /home/kali/.config/alacritty
 cp ./dotfiles/alacritty.yml /home/kali/.config/alacritty/alacritty.yml
 
 GREEN "[++] All done! Happy hacking! Remember to reboot and login again to see the full changes!"
+BLUE  "  [*] Also remember to install the tmux plugins!"
