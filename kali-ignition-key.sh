@@ -44,6 +44,9 @@ cd -
 BLUE "[*] Installing virtualenv..."
 sudo apt install -y virtualenv
 
+BLUE "[*] Installing pipx..."
+sudo apt install -y pipx
+
 BLUE "[*] Installing pyftpdlib..."
 sudo -u kali pip3 install -U pyftpdlib 
 #sudo apt install python3-pyftpdlib
@@ -80,11 +83,12 @@ cp /opt/up-http-tool/up /home/kali/.local/bin/up
 BLUE "[*] Installing feroxbuster..."
 sudo apt install -y feroxbuster
 
-BLUE "[*] Installing Bloodhound..."
+BLUE "[*] Installing Bloodhound and CrackMapExec..."
 sudo apt install -y bloodhound
 sudo apt install -y neo4j
 #sudo -u kali pipx install -U bloodhound
 sudo -u kali python3 -m pip install -U bloodhound
+sudo -u kali pipx install git+https://github.com/mpgn/CrackMapExec
 
 BLUE "[*] Installing seclists..."
 sudo apt install -y seclists

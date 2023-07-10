@@ -38,6 +38,9 @@ sudo apt upgrade -y
 BLUE "[*] Installing git..."
 sudo apt install -y git
 
+BLUE "[*] Installing curl and wget..."
+sudo apt-get install -y curl wget
+
 BLUE "[*] Installing vim..."
 sudo apt install -y vim-gtk3
 
@@ -49,8 +52,8 @@ sudo apt install -y tmux terminator
 git clone https://github.com/tmux-plugins/tpm $USERHOME/.tmux/plugins/tpm
 
 BLUE "[*] Installing alacritty..."
-wget https://github.com/barnumbirr/alacritty-debian/releases/download/v0.11.0-1/alacritty_0.11.0-1_amd64_bullseye.deb
-sudo dpkg -i alacritty_0.11.0-1_amd64_bullseye.deb
+wget https://github.com/barnumbirr/alacritty-debian/releases/download/v0.12.0-1/alacritty_0.12.0_amd64_bullseye.deb
+sudo dpkg -i alacritty_0.12.0_amd64_bullseye.deb
 sudo apt install -f
 
 BLUE "[*] Installing openvpn..."
@@ -58,9 +61,6 @@ sudo apt-get install -y openvpn
 
 BLUE "[*] Installing mingw-w64..."
 sudo apt install -y mingw-w64
-
-BLUE "[*] Installing curl and wget..."
-sudo apt-get install -y curl wget
 
 BLUE "[*] Installing Powershell..."
 sudo apt install -y apt-transport-https software-properties-common

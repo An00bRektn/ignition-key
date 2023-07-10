@@ -9,6 +9,7 @@ Inspired by John Hammond's [ignition-key](https://github.com/JohnHammond/ignitio
 - [x] Windows Dev machine setup using choco + pwsh
     - [x] Test the Windows dev install script
 - [x] Test Ubuntu script
-- [ ] More wallpapers and/or terminal customization?
+- [x] More wallpapers and/or terminal customization?
+- [ ] patch out the PEP668 stuff everyone is trying to do (remove the `/usr/lib/python3.x/EXTERNALLY-MANAGED` file)
 
 **NOTE**: Author assumes zero liability for any data loss or misuse (or use) of the script. Can be used on a bare metal machine, but that's on you.
