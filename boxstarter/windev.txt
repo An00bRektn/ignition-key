@@ -7,10 +7,9 @@ cinst firefox
 cinst microsoft-windows-terminal
 
 cinst imhex
-cinst floss
 cinst pebear
 cinst sysinternals --ignore-checksum
-cinst processhacker
+cinst systeminformer-nightlybuilds
 cinst wireshark
 cinst git
 
@@ -19,7 +18,9 @@ cinst x64dbg.portable
 cinst ghidra
 cinst cutter
 cinst dnspyex
+cinst yara
 
 cinst python3
 cinst golang
 cinst nim
+cinst openvpn
