@@ -27,12 +27,12 @@ New-Item -Path 'C:\Users\sreisz\Desktop\the-lab' -ItemType Directory
 Invoke-WebRequest -Uri 'https://www.winitor.com/tools/pestudio/current/pestudio.zip' -OutFile C:\Tools\pestudio.zip
 Invoke-WebRequest -Uri 'https://aka.ms/vs/17/release/vs_BuildTools.exe' -OutFile C:\Tools\vs_BuildTools.exe
 Invoke-WebRequest -Uri 'http://sandsprite.com/CodeStuff/scdbg.zip' -OutFile C:\Tools\scdbg.zip
-Invoke-WebRequest -Uri 'https://f001.backblazeb2.com/file/EricZimmermanTools/All.zip' -OutFile C:\Tools\EricZimmerman.zip
+Invoke-WebRequest -Uri 'https://download.ericzimmermanstools.com/Get-ZimmermanTools.zip' -OutFile C:\Tools\Get-ZimmermanTools.zip
 Invoke-WebRequest -Uri 'https://didierstevens.com/files/software/DidierStevensSuite.zip' -Outfile C:\Tools\DidierStevensSuite.zip
 
 Expand-Archive C:\Tools\pestudio.zip -DestinationPath C:\Tools\pestudio
 Expand-Archive C:\Tools\scdbg.zip -DestinationPath C:\Tools\scdbg
-Expand-Archive C:\Tools\EricZimmerman.zip -DestinationPath C:\Tools\EricZimmermanTools
+Expand-Archive C:\Tools\Get-ZimmermanTools.zip -DestinationPath C:\Tools\EricZimmermanTools
 Expand-Archive C:\Tools\DidierStevensSuite.zip -DestinationPath C:\Tools\DidierStevensSuite
 
 # A bunch of things that I don't want to automate because they're very likely to break :/

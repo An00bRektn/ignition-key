@@ -22,5 +22,4 @@ cinst yara
 
 cinst python3
 cinst golang
-cinst nim
 cinst openvpn
